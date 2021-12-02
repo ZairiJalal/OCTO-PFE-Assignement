@@ -5,15 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ma.octo.assignement.domain.util.EventType;
 
-import javax.persistence.*;
+/*import javax.persistence.*;
 
 @Entity
-@Table(name = "AUDIT_VERSEMENT")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TYPE-AU",discriminatorType = DiscriminatorType.STRING,length = 2)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuditVersement  {
-
+public abstract class Audit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,5 +23,4 @@ public class AuditVersement  {
 
     @Enumerated(EnumType.STRING)
     private EventType eventType;
-
-}
+}*/

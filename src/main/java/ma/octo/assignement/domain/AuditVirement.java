@@ -1,43 +1,27 @@
 package ma.octo.assignement.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ma.octo.assignement.domain.util.EventType;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "AUDIT")
+@Table(name = "AUDIT_VIREMENT")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AuditVirement {
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
 
-  @Column(length = 100)
-  private String message;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-  @Enumerated(EnumType.STRING)
-  private EventType eventType;
+    @Column(length = 100)
+    private String message;
 
-  public Long getId() {
-    return id;
-  }
+    @Enumerated(EnumType.STRING)
+    private EventType eventType;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getMessage() {
-    return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public EventType getEventType() {
-    return eventType;
-  }
-
-  public void setEventType(EventType eventType) {
-    this.eventType = eventType;
-  }
 }

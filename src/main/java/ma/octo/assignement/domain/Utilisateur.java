@@ -1,15 +1,19 @@
 package ma.octo.assignement.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "UTILISATEUR")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Utilisateur implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,52 +34,7 @@ public class Utilisateur implements Serializable {
   @Temporal(TemporalType.DATE)
   private Date birthdate;
 
+  @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+  private List<Compte> comptes = new ArrayList<>();
 
-  public String getGender() {
-    return gender;
-  }
-
-  public void setGender(String gender) {
-    this.gender = gender;
-  }
-
-  public String getLastname() {
-    return lastname;
-  }
-
-  public void setLastname(String lastname) {
-    this.lastname = lastname;
-  }
-
-  public String getFirstname() {
-    return firstname;
-  }
-
-  public void setFirstname(String firstname) {
-    this.firstname = firstname;
-  }
-
-  public Date getBirthdate() {
-    return birthdate;
-  }
-
-  public void setBirthdate(Date birthdate) {
-    this.birthdate = birthdate;
-  }
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 }

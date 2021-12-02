@@ -1,10 +1,19 @@
 package ma.octo.assignement.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "COMPTE")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Compte {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,6 +22,7 @@ public class Compte {
   @Column(length = 16, unique = true)
   private String nrCompte;
 
+  @Column(unique = true)
   private String rib;
 
   @Column(precision = 16, scale = 2)
@@ -22,43 +32,12 @@ public class Compte {
   @JoinColumn(name = "utilisateur_id")
   private Utilisateur utilisateur;
 
-  public String getNrCompte() {
-    return nrCompte;
-  }
+  @OneToMany(mappedBy = "compteEmetteur", cascade = CascadeType.ALL)
+  private List<Virement> virementsEmetteur = new ArrayList<>();
 
-  public void setNrCompte(String nrCompte) {
-    this.nrCompte = nrCompte;
-  }
+  @OneToMany(mappedBy = "compteBeneficiaire", cascade = CascadeType.ALL)
+  private List<Virement> virementsBeneficiaire = new ArrayList<>();
 
-  public String getRib() {
-    return rib;
-  }
-
-  public void setRib(String rib) {
-    this.rib = rib;
-  }
-
-  public BigDecimal getSolde() {
-    return solde;
-  }
-
-  public void setSolde(BigDecimal solde) {
-    this.solde = solde;
-  }
-
-  public Utilisateur getUtilisateur() {
-    return utilisateur;
-  }
-
-  public void setUtilisateur(Utilisateur utilisateur) {
-    this.utilisateur = utilisateur;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
+  @OneToMany(mappedBy = "compteBeneficiaire", cascade = CascadeType.ALL)
+  private List<Versement> versements = new ArrayList<>();
 }

@@ -10,12 +10,11 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VirementGetDto {
+public class VersementGetDto {
 
-  private String nrCompteEmetteur;
-  private String nrCompteBeneficiaire;
-  private String motif;
-  private BigDecimal montantVirement;
-  private Date date;
-
+    private BigDecimal montantVersement;
+    private Date date;
+    private String nom_prenom_emetteur;
+    private String ribCompteBeneficiaire;
+    private String motif;
 }
