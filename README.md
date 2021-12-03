@@ -1,3 +1,7 @@
+## Architecture :
+![SPr](https://user-images.githubusercontent.com/58845279/144608101-ba7df2c0-8161-4b2e-9ebd-fa45fad6ecab.PNG)
+## Diagramme de classes des entités :
+![Présentation sans titre (6)](https://user-images.githubusercontent.com/58845279/144608202-4f732920-5785-49e1-873f-f53dc75751b6.png)
 ## Description :
 
 Un virement est un transfert d'argent d'un compte emetteur vers un compte bénéficiaire ...
