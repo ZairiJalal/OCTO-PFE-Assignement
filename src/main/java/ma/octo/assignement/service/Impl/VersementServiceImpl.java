@@ -73,7 +73,7 @@ public class VersementServiceImpl implements VersementService {
         Versement versement = versementMapper.versementPostDtoToVersement(versementPostDto);
         versement = versementRepository.save(versement);
 
-        auditService.auditVirement("Virement depuis " + versement.getNom_prenom_emetteur() + " vers "
+        auditService.auditVirement("Versement depuis " + versement.getNom_prenom_emetteur() + " vers "
                 + versement.getCompteBeneficiaire().getRib()+ " d'un montant de "
                 + versement.getMontant().toString());
 
