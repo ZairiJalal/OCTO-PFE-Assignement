@@ -21,8 +21,6 @@ class VirementController {
 
     @GetMapping("lister_virements")
     ResponseEntity<List<VirementGetDto>> loadAll() {
-        /*return ResponseEntity.ok()
-                .body(virementService.getVirements());*/
         List<VirementGetDto> virementsDto = virementService.getVirements();
         return ResponseEntity.status((virementsDto == null || virementsDto.isEmpty()) ? HttpStatus.NO_CONTENT : HttpStatus.OK)
                 .body(virementsDto);

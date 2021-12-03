@@ -22,6 +22,7 @@ import java.util.List;
 @Service
 public class VersementServiceImpl implements VersementService {
     public static final int MONTANT_MAXIMAL = 10000;
+    public static final int MONTANT_MINIMAL = 10;
 
     @Autowired
     VersementRepository versementRepository;
@@ -47,40 +48,34 @@ public class VersementServiceImpl implements VersementService {
         String nom_prenom_emetteur = versementPostDto.getNom_prenom_emetteur();
         Compte cmpteBeneficiaire = compteRepository.findByRib(versementPostDto.getRibCompteBeneficiaire());
 
-        if (nom_prenom_emetteur == null) {
-            System.out.println("nom_prenom_emetteur ??");
-            throw new CompteNonExistantException("Compte Non existant");
+        if (nom_prenom_emetteur == null || nom_prenom_emetteur.length() == 0) {
+            throw new TransactionException("nom & prenom de emetteur est vide");
         }
 
         if (cmpteBeneficiaire == null) {
-            System.out.println("Compte Non existant");
             throw new CompteNonExistantException("Compte Non existant");
         }
 
         if (versementPostDto.getMontantVersement().equals(null) || versementPostDto.getMontantVersement().intValue() == 0) {
-            System.out.println("Montant vide");
             throw new TransactionException("Montant vide");
-        } else if (versementPostDto.getMontantVersement().intValue() < 10) {
-            System.out.println("Montant minimal de virement non atteint");
-            throw new MontantMinNonAtteintExeption("Montant minimal de virement non atteint");
+        } else if (versementPostDto.getMontantVersement().intValue() < MONTANT_MINIMAL) {
+            throw new MontantMinNonAtteintExeption("Montant minimal de virement non atteint: "+MONTANT_MINIMAL);
         } else if (versementPostDto.getMontantVersement().intValue() > MONTANT_MAXIMAL) {
-            System.out.println("Montant maximal de virement dépassé");
-            throw new MontantMaxDepasseException("Montant maximal de virement dépassé");
+            throw new MontantMaxDepasseException("Montant maximal de virement dépassé: "+MONTANT_MAXIMAL);
         }
 
-        if (versementPostDto.getMotif().length() < 0) {
-            System.out.println("Motif vide");
+        if (versementPostDto.getMotif().length() == 0 || versementPostDto.getMotif().equals(null)) {
             throw new MotifVideException("Motif vide");
         }
 
         cmpteBeneficiaire.setSolde(cmpteBeneficiaire.getSolde().add(versementPostDto.getMontantVersement()));
         compteRepository.save(cmpteBeneficiaire);
         Versement versement = versementMapper.versementPostDtoToVersement(versementPostDto);
-        versementRepository.save(versement);
+        versement = versementRepository.save(versement);
 
-        auditService.auditVirement("Virement depuis " + versementPostDto.getNom_prenom_emetteur() + " vers "
-                + versementPostDto.getRibCompteBeneficiaire() + " d'un montant de "
-                + versementPostDto.getMontantVersement().toString());
+        auditService.auditVirement("Virement depuis " + versement.getNom_prenom_emetteur() + " vers "
+                + versement.getCompteBeneficiaire().getRib()+ " d'un montant de "
+                + versement.getMontant().toString());
 
         return versementMapper.versementToVersementGetDto(versement);
     }

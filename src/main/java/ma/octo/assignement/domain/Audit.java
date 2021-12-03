@@ -1,15 +1,14 @@
 package ma.octo.assignement.domain;
-
+/*
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ma.octo.assignement.domain.util.EventType;
 
-/*import javax.persistence.*;
+import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TYPE-AU",discriminatorType = DiscriminatorType.STRING,length = 2)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

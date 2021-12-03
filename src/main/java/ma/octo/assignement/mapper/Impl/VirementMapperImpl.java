@@ -24,9 +24,9 @@ public class VirementMapperImpl implements VirementMapper {
         VirementGetDto virementGetDto = new VirementGetDto();
         virementGetDto.setNrCompteEmetteur(virement.getCompteEmetteur().getNrCompte());
         virementGetDto.setNrCompteBeneficiaire(virement.getCompteBeneficiaire().getNrCompte());
-        virementGetDto.setMontantVirement(virement.getMontantVirement());
+        virementGetDto.setMontantVirement(virement.getMontant());
         virementGetDto.setDate(virement.getDateExecution());
-        virementGetDto.setMotif(virement.getMotifVirement());
+        virementGetDto.setMotif(virement.getMotif());
 
         return virementGetDto;
     }
@@ -38,8 +38,8 @@ public class VirementMapperImpl implements VirementMapper {
         }
         Virement virement = new Virement();
 
-        virement.setMontantVirement(virementGetDto.getMontantVirement());
-        virement.setMotifVirement(virementGetDto.getMotif());
+        virement.setMontant(virementGetDto.getMontantVirement());
+        virement.setMotif(virementGetDto.getMotif());
         virement.setCompteEmetteur(compteRepository.findByNrCompte(
                 virementGetDto.getNrCompteEmetteur()
         ));
@@ -58,8 +58,8 @@ public class VirementMapperImpl implements VirementMapper {
         VirementPostDto virementPostDto = new VirementPostDto();
         virementPostDto.setNrCompteEmetteur(virement.getCompteEmetteur().getNrCompte());
         virementPostDto.setNrCompteBeneficiaire(virement.getCompteBeneficiaire().getNrCompte());
-        virementPostDto.setMontantVirement(virement.getMontantVirement());
-        virementPostDto.setMotif(virement.getMotifVirement());
+        virementPostDto.setMontantVirement(virement.getMontant());
+        virementPostDto.setMotif(virement.getMotif());
 
         return virementPostDto;
     }
@@ -71,8 +71,8 @@ public class VirementMapperImpl implements VirementMapper {
         }
         Virement virement = new Virement();
 
-        virement.setMontantVirement(virementPostDto.getMontantVirement());
-        virement.setMotifVirement(virementPostDto.getMotif());
+        virement.setMontant(virementPostDto.getMontantVirement());
+        virement.setMotif(virementPostDto.getMotif());
         virement.setCompteEmetteur(compteRepository.findByNrCompte(
                 virementPostDto.getNrCompteEmetteur()
         ));

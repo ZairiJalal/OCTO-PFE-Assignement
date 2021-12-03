@@ -22,9 +22,9 @@ public class VersementMapperImpl implements VersementMapper {
         VersementGetDto versementGetDto = new VersementGetDto();
         versementGetDto.setNom_prenom_emetteur(versement.getNom_prenom_emetteur());
         versementGetDto.setRibCompteBeneficiaire(versement.getCompteBeneficiaire().getRib());
-        versementGetDto.setMontantVersement(versement.getMontantVersement());
+        versementGetDto.setMontantVersement(versement.getMontant());
         versementGetDto.setDate(versement.getDateExecution());
-        versementGetDto.setMotif(versement.getMotifVersement());
+        versementGetDto.setMotif(versement.getMotif());
 
         return versementGetDto;
     }
@@ -36,8 +36,8 @@ public class VersementMapperImpl implements VersementMapper {
         }
         Versement versement = new Versement();
 
-        versement.setMontantVersement(versementGetDto.getMontantVersement());
-        versement.setMotifVersement(versementGetDto.getMotif());
+        versement.setMontant(versementGetDto.getMontantVersement());
+        versement.setMotif(versementGetDto.getMotif());
         versement.setNom_prenom_emetteur(versementGetDto.getNom_prenom_emetteur());
         versement.setCompteBeneficiaire(compteRepository.findByRib(
                 versementGetDto.getRibCompteBeneficiaire()
@@ -54,8 +54,8 @@ public class VersementMapperImpl implements VersementMapper {
         VersementPostDto versementPostDto = new VersementPostDto();
         versementPostDto.setNom_prenom_emetteur(versement.getNom_prenom_emetteur());
         versementPostDto.setRibCompteBeneficiaire(versement.getCompteBeneficiaire().getRib());
-        versementPostDto.setMontantVersement(versement.getMontantVersement());
-        versementPostDto.setMotif(versement.getMotifVersement());
+        versementPostDto.setMontantVersement(versement.getMontant());
+        versementPostDto.setMotif(versement.getMotif());
 
         return versementPostDto;
     }
@@ -67,12 +67,13 @@ public class VersementMapperImpl implements VersementMapper {
         }
         Versement versement = new Versement();
 
-        versement.setMontantVersement(versementPostDto.getMontantVersement());
-        versement.setMotifVersement(versementPostDto.getMotif());
+        versement.setMontant(versementPostDto.getMontantVersement());
+        versement.setMotif(versementPostDto.getMotif());
         versement.setNom_prenom_emetteur(versementPostDto.getNom_prenom_emetteur());
         versement.setCompteBeneficiaire(compteRepository.findByRib(
                 versementPostDto.getRibCompteBeneficiaire()
         ));
+        versement.setDateExecution(new Date());
 
         return versement;
     }

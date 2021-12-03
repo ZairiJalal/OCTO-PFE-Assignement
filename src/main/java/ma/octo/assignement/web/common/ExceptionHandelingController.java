@@ -1,23 +1,69 @@
 package ma.octo.assignement.web.common;
 
-import ma.octo.assignement.exceptions.CompteNonExistantException;
-import ma.octo.assignement.exceptions.SoldeDisponibleInsuffisantException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ma.octo.assignement.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
+
 
 @ControllerAdvice
 public class ExceptionHandelingController {
 
     @ExceptionHandler(SoldeDisponibleInsuffisantException.class)
-    public ResponseEntity<String> handleSoldeDisponibleInsuffisantException(Exception ex, WebRequest request) {
-        return new ResponseEntity<>("Pas de solde pas de virement", null, HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS);
+    public ResponseEntity<Object> handleSoldeDisponibleInsuffisantException(Exception exception) {
+        HttpStatus httpStatus = HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS;
+        ExceptionData exceptionData = new ExceptionData(exception.getMessage(),httpStatus);
+        return new ResponseEntity<>(exceptionData, httpStatus);
     }
 
     @ExceptionHandler(CompteNonExistantException.class)
-    public ResponseEntity<String> handleCompteNonExistantException(Exception ex, WebRequest request) {
-        return new ResponseEntity<>("Compte introuvable", null, HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<Object> handleCompteNonExistantException(Exception exception) {
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+        ExceptionData exceptionData = new ExceptionData(exception.getMessage(),httpStatus);
+        return new ResponseEntity<>(exceptionData, httpStatus);
     }
+
+    @ExceptionHandler(MontantMaxDepasseException.class)
+    public ResponseEntity<Object> handleMontantMaxDepasseException(Exception exception) {
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+        ExceptionData exceptionData = new ExceptionData(exception.getMessage(),httpStatus);
+        return new ResponseEntity<>(exceptionData, httpStatus);
+    }
+
+    @ExceptionHandler(MontantMinNonAtteintExeption.class)
+    public ResponseEntity<Object> handleMontantMinNonAtteintExeption(Exception exception) {
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+        ExceptionData exceptionData = new ExceptionData(exception.getMessage(),httpStatus);
+        return new ResponseEntity<>(exceptionData, httpStatus);
+    }
+
+    @ExceptionHandler(MotifVideException.class)
+    public ResponseEntity<Object> handleMotifVideException(Exception exception) {
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+        ExceptionData exceptionData = new ExceptionData(exception.getMessage(),httpStatus);
+        return new ResponseEntity<>(exceptionData, httpStatus);
+    }
+
+    @ExceptionHandler(UtilisateurNonExistantException.class)
+    public ResponseEntity<Object> handleUtilisateurNonExistantException(Exception exception) {
+        HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
+        ExceptionData exceptionData = new ExceptionData(exception.getMessage(),httpStatus);
+        return new ResponseEntity<>(exceptionData, httpStatus);
+    }
+
+    @ExceptionHandler(TransactionException.class)
+    public ResponseEntity<Object> handleTransactionException(Exception exception) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        ExceptionData exceptionData = new ExceptionData(exception.getMessage(),httpStatus);
+        return new ResponseEntity<>(exceptionData, httpStatus);
+    }
+}
+@Data @NoArgsConstructor @AllArgsConstructor
+class ExceptionData{
+    private  String message;
+    private  HttpStatus httpStatus;
 }

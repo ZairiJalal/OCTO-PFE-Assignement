@@ -1,4 +1,4 @@
-/*package ma.octo.assignement.domain;
+package ma.octo.assignement.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@DiscriminatorColumn(name = "TYPE-OP",discriminatorType = DiscriminatorType.STRING,length = 2)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +18,7 @@ public abstract class Operation {
     private Long id;
 
     @Column(precision = 16, scale = 2, nullable = false)
-    private BigDecimal montantVirement;
+    private BigDecimal montant;
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
@@ -27,4 +26,7 @@ public abstract class Operation {
 
     @ManyToOne
     private Compte compteBeneficiaire;
-}*/
+
+    @Column(length = 200)
+    private String motif;
+}

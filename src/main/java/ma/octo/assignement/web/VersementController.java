@@ -2,6 +2,8 @@ package ma.octo.assignement.web;
 
 import ma.octo.assignement.dto.VersementGetDto;
 import ma.octo.assignement.dto.VersementPostDto;
+import ma.octo.assignement.dto.VirementGetDto;
+import ma.octo.assignement.exceptions.*;
 import ma.octo.assignement.service.VersementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,16 +24,14 @@ public class VersementController {
     @GetMapping("/lister_versements")
     public ResponseEntity<List<VersementGetDto>> loadAll() {
         List<VersementGetDto> versementsDto = versementService.getVersements();
-        if (CollectionUtils.isEmpty(versementsDto)) {
-            return new ResponseEntity<>(versementsDto, HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(versementsDto, HttpStatus.OK);
+        return ResponseEntity.status((versementsDto == null || versementsDto.isEmpty()) ? HttpStatus.NO_CONTENT : HttpStatus.OK)
+                .body(versementsDto);
     }
 
     @PostMapping("/executerVersements")
     public ResponseEntity<VersementGetDto> createTransaction(
             @RequestBody VersementPostDto versementPostDto
-    ) throws Exception {
+    ) throws CompteNonExistantException, TransactionException, SoldeDisponibleInsuffisantException, MotifVideException, MontantMinNonAtteintExeption, MontantMaxDepasseException {
         return new ResponseEntity<>(versementService.addVersement(versementPostDto), HttpStatus.CREATED);
     }
 }
